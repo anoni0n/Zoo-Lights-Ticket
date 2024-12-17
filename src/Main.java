@@ -1,7 +1,4 @@
 import java.util.Scanner;
-import java.util.Calendar;
-
-import static java.util.Calendar.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,50 +9,28 @@ public class Main {
         System.out.println("Enter your full name");
         String userName = scanner.nextLine();
         System.out.println("What date would you like to attend? (mm/dd/yyyy)");
-        String date = scanner.nextLine();
+        String dayOfEntry = scanner.nextLine();
+        if (isWeekend(dayOfEntry)){
 
-        Calendar calendar = new Calendar() {
-            @Override
-            protected void computeTime() {
+        }
+    }
 
-            }
+    public static boolean isWeekend(String dayOfEntry){
 
-            @Override
-            protected void computeFields() {
+        int month = Integer.parseInt(dayOfEntry.substring(0,2));
+        int date = Integer.parseInt(dayOfEntry.substring(3,5));
+        int century = Integer.parseInt(dayOfEntry.substring(6,8));
+        int year = Integer.parseInt(dayOfEntry.substring(8,10));
 
-            }
+        if (month <= 2){
+            month += 10;
+        }
+        else {
+            month -= 2;
+        }
 
-            @Override
-            public void add(int field, int amount) {
+        int dayOfWeek = (int) (date + (2.6*month - 0.2) - 2*century + year + year/4 + century/4)%7;
 
-            }
-
-            @Override
-            public void roll(int field, boolean up) {
-
-            }
-
-            @Override
-            public int getMinimum(int field) {
-                return 0;
-            }
-
-            @Override
-            public int getMaximum(int field) {
-                return 0;
-            }
-
-            @Override
-            public int getGreatestMinimum(int field) {
-                return 0;
-            }
-
-            @Override
-            public int getLeastMaximum(int field) {
-                return 0;
-            }
-        };
-        calendar.set(2024,DECEMBER,16);
-        System.out.println(calendar.get(DAY_OF_WEEK));
+        return dayOfWeek == 0 || dayOfWeek == 6;
     }
 }
