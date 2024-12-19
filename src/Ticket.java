@@ -15,7 +15,9 @@ public class Ticket {
         Ticket.canDrink = canDrink;
         Ticket.canRideTrain = canRideTrain;
     }
-
+    public int getTicketID(){
+        return ID;
+    }
     public void printTicket(){
         System.out.printf("%nID: %d%nNAME: %s%nAGE: %d%nCOST: %.2f%nCAN ACCESS ALCOHOL AREA: %s%nCAN RIDE TRAIN: %s", ID, userName, age, cost, canDrink, canRideTrain);
     }
