@@ -21,6 +21,7 @@ public class Main {
                 for (int i = 0; i < ticketIDs.size(); i++) {
                     if (targetID == ticketIDs.get(i)) {
                         tickets.get(i).printTicket();
+                        scanner.nextLine();
                         validID = true;
                     } else if (i == tickets.size() - 1) {
                         System.out.println("\nThere is no ticket with that ID in the database. Try looking up a different ID.");
@@ -38,10 +39,10 @@ public class Main {
 
         public static Ticket makeTicket(){
             Scanner scanner = new Scanner(System.in);
-            String userName = "";
+            String userName;
             boolean isWeekend;
             boolean walking;
-            String birthday = "";
+            String birthday;
             boolean discount = false;
             boolean canDrink = false;
             boolean canRideTrain = false;
@@ -50,7 +51,7 @@ public class Main {
             int teens = 0;
             int partyMembers = 0;
             int age;
-            double cost = 0;
+            double cost;
             int ID = (int)(Math.random()*100000);
 
             System.out.println("Enter your full name:");
@@ -86,18 +87,19 @@ public class Main {
                     int height = scanner.nextInt();
                     System.out.println("Input your weight (lbs):");
                     int weight = scanner.nextInt();
-                    if (height > 48 && weight < 300 && walking) {
+                    if (height > 48 && weight < 300) {
                         canRideTrain = true;
+                        scanner.nextInt();
                     }
                 }
             }
             else {
                 System.out.println("How many people are in your party?");
                 partyMembers = scanner.nextInt();
+                scanner.nextLine();
             }
 
             System.out.println("Enter discount code:");
-            scanner.nextLine();
             if (scanner.nextLine().equals("MEMBER")) {
                 discount = true;
             }
