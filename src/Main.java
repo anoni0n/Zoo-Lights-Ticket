@@ -9,9 +9,8 @@ public class Main {
         boolean makingTickets = true;
         while (makingTickets){
             Scanner scanner = new Scanner(System.in);
-            Ticket ticket = makeTicket();
-            tickets.add(ticket);
-            ticketIDs.add(ticket.getTicketID());
+            tickets.add(makeTicket());
+            ticketIDs.add(tickets.getLast().getTicketID());
             System.out.println("\nThere are currently "+ tickets.size()+" tickets in the database. Would you like to look one up? (yes/no)");
             boolean validID = !scanner.nextLine().equals("yes");
             while (!validID) {
@@ -21,18 +20,19 @@ public class Main {
                 for (int i = 0; i < ticketIDs.size(); i++) {
                     if (targetID == ticketIDs.get(i)) {
                         tickets.get(i).printTicket();
-                        scanner.nextLine();
                         validID = true;
-                    } else if (i == tickets.size() - 1) {
+                        i = ticketIDs.size();
+                    }
+                    else if (i == tickets.size() - 1) {
                         System.out.println("\nThere is no ticket with that ID in the database. Try looking up a different ID.");
                         System.out.println(ticketIDs);
                         targetID = scanner.nextInt();
-                        scanner.nextLine();
                         i = 0;
                     }
                 }
+                scanner.nextLine();
             }
-            System.out.println("\nWould you like to keep making tickets? (yes/no)");
+            System.out.println("Would you like to keep making tickets? (yes/no)");
             makingTickets = scanner.nextLine().equals("yes");
         }
     }
@@ -52,7 +52,10 @@ public class Main {
             int partyMembers = 0;
             int age;
             double cost;
-            int ID = (int)(Math.random()*100000);
+            int ID = 0;
+            while (ID < 9999) {
+                ID = (int)(Math.random()*100000);
+            }
 
             System.out.println("Enter your full name:");
             userName = scanner.nextLine();
@@ -80,16 +83,16 @@ public class Main {
                 kids = scanner.nextInt();
                 System.out.println("How many minors above 15 are in your party?");
                 teens = scanner.nextInt();
-                scanner.nextLine();
                 System.out.println("Would you like to ride the train? (yes/no)");
+                scanner.nextLine();
                 if (scanner.nextLine().equals("yes")) {
                     System.out.println("Input your height (in):");
                     int height = scanner.nextInt();
                     System.out.println("Input your weight (lbs):");
                     int weight = scanner.nextInt();
+                    scanner.nextLine();
                     if (height > 48 && weight < 300) {
                         canRideTrain = true;
-                        scanner.nextInt();
                     }
                 }
             }
