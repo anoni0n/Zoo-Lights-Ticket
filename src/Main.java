@@ -7,6 +7,7 @@ public class Main {
         ArrayList<Ticket> tickets = new ArrayList<>();
         ArrayList<Integer> ticketIDs = new ArrayList<>();
         boolean makingTickets = true;
+        //makes tickets and allows the user to look them up
         while (makingTickets){
             Scanner scanner = new Scanner(System.in);
             tickets.add(makeTicket());
@@ -17,6 +18,7 @@ public class Main {
                 System.out.println(ticketIDs);
                 System.out.println("Enter the ticket ID to look one up.");
                 int targetID = scanner.nextInt();
+                //checks if the ticket ID that was looked up exists in the ticket ArrayList and prints it if it does.
                 for (int i = 0; i < ticketIDs.size(); i++) {
                     if (targetID == ticketIDs.get(i)) {
                         tickets.get(i).printTicket();
@@ -32,11 +34,15 @@ public class Main {
                 }
                 scanner.nextLine();
             }
-            System.out.println("Would you like to keep making tickets? (yes/no)");
+            System.out.println("\nWould you like to keep making tickets? (yes/no)");
             makingTickets = scanner.nextLine().equals("yes");
         }
     }
 
+    /**
+     * asks the user for their information and creates a ticket with their information
+     * @return a ticket with the user's information
+     */
         public static Ticket makeTicket(){
             Scanner scanner = new Scanner(System.in);
             String userName;
@@ -127,9 +133,15 @@ public class Main {
             return new Ticket(ID, userName, age, cost, canDrink, canRideTrain);
         }
 
+    /**
+     * gets the user's age the day they wish to enter the zoo
+     * @param birthday the day the user was born (mm/dd/yyyy)
+     * @param dayOfEntry the day the user wishes to enter the zoo (mm/dd/yyyy)
+     * @return the user's age
+     */
         public static int getAge(String birthday, String dayOfEntry){
 
-            int age = 0;
+            int age;
             int birthYear = Integer.parseInt(birthday.substring(6, 10));
             int birthMonth = Integer.parseInt(birthday.substring(0, 2));
             int birthDate = Integer.parseInt(birthday.substring(3, 5));
@@ -138,15 +150,22 @@ public class Main {
             int monthOfEntry = Integer.parseInt(dayOfEntry.substring(0, 2));
             int dateOfEntry = Integer.parseInt(dayOfEntry.substring(3, 5));
 
-            if ((yearOfEntry - birthYear > 21) || (yearOfEntry - birthYear == 21 && monthOfEntry > birthMonth) || (yearOfEntry - birthYear == 21 && monthOfEntry == birthMonth && dateOfEntry >= birthDate)) {
+            //checks if the user's birthday has passed yet and adjusts the age accordingly
+            if (monthOfEntry > birthMonth || (monthOfEntry == birthMonth && dateOfEntry > birthDate)) {
                 age = yearOfEntry - birthYear;
-            } else if (monthOfEntry > birthMonth || (monthOfEntry == birthMonth && dateOfEntry > birthDate)) {
-                age = yearOfEntry - birthYear;
+            }
+            else {
+                age = yearOfEntry - birthYear - 1;
             }
             return age;
         }
 
-        public static boolean isWeekend (String dayOfEntry){
+    /**
+     * returns whether the date entered was on the weekend from a formula
+     * @param dayOfEntry the day the user wishes to go to the zoo (mm/dd/yyyy)
+     * @return whether the dayOfEntry is a weekend
+     */
+    public static boolean isWeekend (String dayOfEntry){
 
             int month = Integer.parseInt(dayOfEntry.substring(0, 2));
             int date = Integer.parseInt(dayOfEntry.substring(3, 5));
